@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.6</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ESFA.DC.CollectionsManagement.Models" Version="0.1.4-beta0001" />
+    <PackageReference Include="ESFA.DC.DateTime.Provider.Interface" Version="0.1.4-beta0001" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.CollectionsManagement.Data\ESFA.DC.CollectionsManagement.Data.csproj" />
+    <ProjectReference Include="..\ESFA.DC.CollectionsManagement.Interfaces\ESFA.DC.CollectionsManagement.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
