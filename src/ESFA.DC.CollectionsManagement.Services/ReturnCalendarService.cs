@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.CollectionsManagement.Data;
-using ESFA.DC.CollectionsManagement.Interfaces;
 using ESFA.DC.CollectionsManagement.Models;
+using ESFA.DC.CollectionsManagement.Services.Interface;
 using ESFA.DC.DateTime.Provider.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.CollectionsManagement.Services
 {
-    public class ReturnCalendarService : IRetrunCalendarService, IDisposable
+    public class ReturnCalendarService : IReturnCalendarService, IDisposable
     {
         private readonly CollectionsManagementContext _collectionsManagementContext;
         private readonly IDateTimeProvider _dateTimeProvider;
