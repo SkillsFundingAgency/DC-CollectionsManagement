@@ -1,6 +1,5 @@
 ﻿using ESFA.DC.CollectionsManagement.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
 
 namespace ESFA.DC.CollectionsManagement.Data
 {
@@ -18,11 +17,15 @@ namespace ESFA.DC.CollectionsManagement.Data
         public virtual DbSet<Collection> Collection { get; set; }
 
         public virtual DbSet<Collection> Collections { get; set; }
+
         public virtual DbSet<CollectionType> CollectionTypes { get; set; }
+
         public virtual DbSet<Organisation> Organisations { get; set; }
+
         public virtual DbSet<OrganisationCollection> OrganisationCollections { get; set; }
+
         public virtual DbSet<ReturnPeriod> ReturnPeriods { get; set; }
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Collection>(entity =>

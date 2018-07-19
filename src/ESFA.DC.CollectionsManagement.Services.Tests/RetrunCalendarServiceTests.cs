@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ESFA.DC.CollectionsManagement.Data;
-using ESFA.DC.CollectionsManagement.Models;
 using ESFA.DC.CollectionsManagement.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using ESFA.DC.CollectionsManagement.Interfaces;
+using ESFA.DC.CollectionsManagement.Models;
 using ESFA.DC.DateTime.Provider.Interface;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Xunit;
 
 namespace ESFA.DC.CollectionsManagement.Services.Tests
 {
     public class RetrunCalendarServiceTests
     {
-
         [Fact]
         public void Test_GetCurrentPeriod_Success()
         {
@@ -25,7 +23,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             var dateTimeprovider = new Mock<IDateTimeProvider>();
             dateTimeprovider.Setup(x => x.GetNowUtc()).Returns(System.DateTime.UtcNow);
 
-            var service = new RetrunCalendarService(dbContextOptions,dateTimeprovider.Object);
+            var service = new ReturnCalendarService(dbContextOptions, dateTimeprovider.Object);
 
             SetupData(dbContextOptions);
 
@@ -37,7 +35,6 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             result.CalendarYear.Should().Be(2018);
             result.CollectionName.Should().Be("ILR1718");
         }
-
 
         private void SetupData(DbContextOptions dbContextOptions)
         {
@@ -58,12 +55,11 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
                     CalendarYear = 2018,
                     ReturnPeriodId = 2,
                     PeriodName = "R01",
-                    StartDateTimeUtc = new System.DateTime(2018,08,22),
+                    StartDateTimeUtc = new System.DateTime(2018, 08, 22),
                     EndDateTimeUtc = new System.DateTime(2018, 09, 04),
                     Collection = collection,
                     CollectionId = 1,
                 });
-
 
                 cmContext.ReturnPeriods.Add(new Data.Entities.ReturnPeriod()
                 {
@@ -77,10 +73,10 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
                     CollectionId = 1
                 });
 
-
                 cmContext.SaveChanges();
             }
         }
+
         private DbContextOptions GetContextOptions([CallerMemberName]string functionName = "")
         {
             var serviceProvider = new ServiceCollection()

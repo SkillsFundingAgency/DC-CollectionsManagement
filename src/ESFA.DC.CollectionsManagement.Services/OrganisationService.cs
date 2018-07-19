@@ -15,13 +15,14 @@ namespace ESFA.DC.CollectionsManagement.Services
 
         public OrganisationService(DbContextOptions dbContextOptions)
         {
-            _collectionsManagementContext = new CollectionsManagementContext(dbContextOptions); 
+            _collectionsManagementContext = new CollectionsManagementContext(dbContextOptions);
         }
+
         public IEnumerable<CollectionType> GetAvailableCollectionTypes(long ukprn)
         {
-            var items  = _collectionsManagementContext.OrganisationCollections
+            var items = _collectionsManagementContext.OrganisationCollections
                 .Where(x => x.Organisation.Ukprn == ukprn)
-                .GroupBy(x=> x.Collection.CollectionType)
+                .GroupBy(x => x.Collection.CollectionType)
                 .Select(y => new CollectionType()
                 {
                     Description = y.Key.Description,
@@ -34,7 +35,7 @@ namespace ESFA.DC.CollectionsManagement.Services
         public IEnumerable<Collection> GetAvailableCollections(long ukprn, string collectionType)
         {
             var items = _collectionsManagementContext.OrganisationCollections
-                .Where(x => x.Organisation.Ukprn == ukprn && 
+                .Where(x => x.Organisation.Ukprn == ukprn &&
                             x.Collection.IsOpen &&
                             x.Collection.CollectionType.Type == collectionType)
                 .Select(y => new Collection()
