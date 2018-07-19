@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using ESFA.DC.CollectionsManagement.Data;
-using ESFA.DC.CollectionsManagement.Models;
 using ESFA.DC.CollectionsManagement.Data.Entities;
+using ESFA.DC.CollectionsManagement.Models;
+using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using ESFA.DC.CollectionsManagement.Interfaces;
-using FluentAssertions;
 
 namespace ESFA.DC.CollectionsManagement.Services.Tests
 {
     public class OrganisationServiceTests
     {
-
         [Fact]
         public void Test_GetAvailableCollectionTypes_NoCollectionFound()
         {
@@ -37,7 +35,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             var service = new OrganisationService(dbContextOptions);
 
             SetupData(dbContextOptions);
-            
+
             var result = service.GetAvailableCollectionTypes(1000).ToList();
 
             result.Should().NotBeNull();
@@ -74,7 +72,6 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             result.Count.Should().Be(0);
         }
 
-
         [Fact]
         public void Test_GetAvailableCollections_Success()
         {
@@ -83,7 +80,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
 
             SetupData(dbContextOptions);
 
-            var result = service.GetAvailableCollections(1000,"ILR").ToList();
+            var result = service.GetAvailableCollections(1000, "ILR").ToList();
 
             result.Should().NotBeNull();
             result.Count.Should().Be(1);
@@ -91,7 +88,6 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             result[0].IsOpen.Should().Be(true);
             result[0].CollectionTitle.Should().Be("test coll");
         }
-
 
         private void SetupData(DbContextOptions dbContextOptions)
         {
@@ -103,7 +99,6 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
                     OrgId = "test_org1",
                     OrganisationId = 1
                 });
-
 
                 cmContext.Collections.Add(new Data.Entities.Collection()
                 {
@@ -137,6 +132,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
                 cmContext.SaveChanges();
             }
         }
+
         private DbContextOptions GetContextOptions([CallerMemberName]string functionName = "")
         {
             var serviceProvider = new ServiceCollection()

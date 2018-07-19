@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.CollectionsManageme
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ESFA.DC.CollectionsManagement.Database", "ESFA.DC.CollectionsManagement.Database\ESFA.DC.CollectionsManagement.Database.sqlproj", "{A5066C6A-A745-48D3-8F0A-5BCF42E15C18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.CollectionsManagement.Interfaces", "ESFA.DC.CollectionsManagement.Interfaces\ESFA.DC.CollectionsManagement.Interfaces.csproj", "{A2C692FB-3428-4B97-B5C8-EEEC7AC4A6EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.CollectionsManagement.Services.Interface", "ESFA.DC.CollectionsManagement.Interfaces\ESFA.DC.CollectionsManagement.Services.Interface.csproj", "{A2C692FB-3428-4B97-B5C8-EEEC7AC4A6EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.CollectionsManagement.Services", "ESFA.DC.CollectionsManagement.Services\ESFA.DC.CollectionsManagement.Services.csproj", "{FB18AFC9-1062-49AF-A74B-EBA75F4D2468}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8F20091F-B71D-43C3-818D-32EE6A809598}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.CollectionsManagement.Services.Tests", "ESFA.DC.CollectionsManagement.Services.Tests\ESFA.DC.CollectionsManagement.Services.Tests.csproj", "{D7B7B652-6EEA-4E3E-AFA9-3619713C97EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESFA.DC.CollectionsManagement.Services.Tests", "ESFA.DC.CollectionsManagement.Services.Tests\ESFA.DC.CollectionsManagement.Services.Tests.csproj", "{D7B7B652-6EEA-4E3E-AFA9-3619713C97EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
