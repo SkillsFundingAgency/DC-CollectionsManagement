@@ -1,19 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+	<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
     <Version>1.0.6</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ESFA.DC.CollectionsManagement.Interfaces" Version="0.1.0-beta0001" />
     <PackageReference Include="ESFA.DC.CollectionsManagement.Models" Version="0.1.4-beta0001" />
     <PackageReference Include="ESFA.DC.DateTime.Provider.Interface" Version="0.1.4-beta0001" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ESFA.DC.CollectionsManagement.Data\ESFA.DC.CollectionsManagement.Data.csproj" />
-    <ProjectReference Include="..\ESFA.DC.CollectionsManagement.Interfaces\ESFA.DC.CollectionsManagement.Interfaces.csproj" />
+    <ProjectReference Include="..\ESFA.DC.CollectionsManagement.Data\ESFA.DC.CollectionsManagement.Data.csproj">
+      <PrivateAssets>all</PrivateAssets>
+    </ProjectReference>
   </ItemGroup>
 
+   <Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+    </ItemGroup>
+  </Target>
 </Project>
