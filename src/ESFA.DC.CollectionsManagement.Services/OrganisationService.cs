@@ -37,6 +37,8 @@ namespace ESFA.DC.CollectionsManagement.Services
         public async Task<IEnumerable<Collection>> GetAvailableCollectionsAsync(long ukprn, string collectionType)
         {
             var data = await _collectionsManagementContext.OrganisationCollections
+                .Include(x => x.Collection)
+                .ThenInclude(x => x.CollectionType)
                 .Where(x => x.Organisation.Ukprn == ukprn &&
                             x.Collection.IsOpen &&
                             x.Collection.CollectionType.Type == collectionType).

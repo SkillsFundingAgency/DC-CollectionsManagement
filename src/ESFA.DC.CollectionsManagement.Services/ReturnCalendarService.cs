@@ -24,7 +24,7 @@ namespace ESFA.DC.CollectionsManagement.Services
         public async Task<ReturnPeriod> GetCurrentPeriodAsync(string collectionName)
         {
             var currentDateTime = _dateTimeProvider.GetNowUtc();
-            var data = await _collectionsManagementContext.ReturnPeriods.Where(x =>
+            var data = await _collectionsManagementContext.ReturnPeriods.Include(x => x.Collection).Where(x =>
                     x.Collection.Name == collectionName &&
                     currentDateTime >= x.StartDateTimeUtc
                     && currentDateTime <= x.EndDateTimeUtc)

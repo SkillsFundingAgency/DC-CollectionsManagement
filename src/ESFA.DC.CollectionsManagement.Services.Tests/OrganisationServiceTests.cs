@@ -22,10 +22,10 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
 
             SetupData(dbContextOptions);
 
-            var result = service.GetAvailableCollectionTypes(99999).ToList();
+            var result = service.GetAvailableCollectionTypesAsync(99999).Result;
 
             result.Should().NotBeNull();
-            result.Count.Should().Be(0);
+            result.Count().Should().Be(0);
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
 
             SetupData(dbContextOptions);
 
-            var result = service.GetAvailableCollectionTypes(1000).ToList();
+            var result = service.GetAvailableCollectionTypesAsync(1000).Result.ToList();
 
             result.Should().NotBeNull();
             result.Count.Should().Be(1);
@@ -52,7 +52,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
 
             SetupData(dbContextOptions);
 
-            var result = service.GetAvailableCollections(1000, "EAS011").ToList();
+            var result = service.GetAvailableCollectionsAsync(1000, "EAS011").Result.ToList();
 
             result.Should().NotBeNull();
             result.Count.Should().Be(0);
@@ -66,7 +66,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
 
             SetupData(dbContextOptions);
 
-            var result = service.GetAvailableCollections(99999, "ILR").ToList();
+            var result = service.GetAvailableCollectionsAsync(99999, "ILR").Result.ToList();
 
             result.Should().NotBeNull();
             result.Count.Should().Be(0);
@@ -80,7 +80,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
 
             SetupData(dbContextOptions);
 
-            var result = service.GetAvailableCollections(1000, "ILR").ToList();
+            var result = service.GetAvailableCollectionsAsync(1000, "ILR").Result.ToList();
 
             result.Should().NotBeNull();
             result.Count.Should().Be(1);
