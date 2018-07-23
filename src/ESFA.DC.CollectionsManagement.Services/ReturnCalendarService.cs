@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ESFA.DC.CollectionsManagement.Data;
 using ESFA.DC.CollectionsManagement.Models;
 using ESFA.DC.CollectionsManagement.Services.Interface;
@@ -20,23 +21,29 @@ namespace ESFA.DC.CollectionsManagement.Services
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public ReturnPeriod GetCurrentPeriod(string collectionName)
+        public async Task<ReturnPeriod> GetCurrentPeriodAsync(string collectionName)
         {
             var currentDateTime = _dateTimeProvider.GetNowUtc();
-            var periods = _collectionsManagementContext.ReturnPeriods.Where(x =>
+            var data = await _collectionsManagementContext.ReturnPeriods.Where(x =>
                     x.Collection.Name == collectionName &&
                     currentDateTime >= x.StartDateTimeUtc
                     && currentDateTime <= x.EndDateTimeUtc)
-                .Select(x => new ReturnPeriod()
+                    .FirstOrDefaultAsync();
+            if (data != null)
+            {
+                var period = new ReturnPeriod()
                 {
-                    PeriodName = x.PeriodName,
-                    EndDateTimeUtc = x.EndDateTimeUtc,
-                    StartDateTimeUtc = x.StartDateTimeUtc,
-                    CalendarMonth = x.CalendarMonth,
-                    CalendarYear = x.CalendarYear,
-                    CollectionName = x.Collection.Name
-                });
-            return periods.SingleOrDefault();
+                    PeriodName = data.PeriodName,
+                    EndDateTimeUtc = data.EndDateTimeUtc,
+                    StartDateTimeUtc = data.StartDateTimeUtc,
+                    CalendarMonth = data.CalendarMonth,
+                    CalendarYear = data.CalendarYear,
+                    CollectionName = data.Collection.Name
+                };
+                return period;
+            }
+
+            return null;
         }
 
         public void Dispose()
