@@ -27,7 +27,8 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
 
             SetupData(dbContextOptions);
 
-            var result = service.GetCurrentPeriod("ILR1718");
+            var task = service.GetCurrentPeriodAsync("ILR1718");
+            var result = task.GetAwaiter().GetResult();
 
             result.Should().NotBeNull();
             result.PeriodName.Should().Be("R12");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using ESFA.DC.CollectionsManagement.Data;
 using ESFA.DC.CollectionsManagement.Models;
 using ESFA.DC.CollectionsManagement.Services.Interface;
@@ -18,27 +19,31 @@ namespace ESFA.DC.CollectionsManagement.Services
             _collectionsManagementContext = new CollectionsManagementContext(dbContextOptions);
         }
 
-        public IEnumerable<CollectionType> GetAvailableCollectionTypes(long ukprn)
+        public async Task<IEnumerable<CollectionType>> GetAvailableCollectionTypesAsync(long ukprn)
         {
-            var items = _collectionsManagementContext.OrganisationCollections
+            var data = await _collectionsManagementContext.OrganisationCollections
                 .Where(x => x.Organisation.Ukprn == ukprn)
                 .GroupBy(x => x.Collection.CollectionType)
-                .Select(y => new CollectionType()
-                {
-                    Description = y.Key.Description,
-                    Type = y.Key.Type
-                });
+                .ToListAsync();
+            var items = data.Select(y => new CollectionType()
+            {
+                Description = y.Key.Description,
+                Type = y.Key.Type
+            });
 
             return items;
         }
 
-        public IEnumerable<Collection> GetAvailableCollections(long ukprn, string collectionType)
+        public async Task<IEnumerable<Collection>> GetAvailableCollectionsAsync(long ukprn, string collectionType)
         {
-            var items = _collectionsManagementContext.OrganisationCollections
+            var data = await _collectionsManagementContext.OrganisationCollections
+                .Include(x => x.Collection)
+                .ThenInclude(x => x.CollectionType)
                 .Where(x => x.Organisation.Ukprn == ukprn &&
                             x.Collection.IsOpen &&
-                            x.Collection.CollectionType.Type == collectionType)
-                .Select(y => new Collection()
+                            x.Collection.CollectionType.Type == collectionType).
+                ToListAsync();
+            var items = data.Select(y => new Collection()
                 {
                     CollectionTitle = y.Collection.Name,
                     IsOpen = y.Collection.IsOpen,
