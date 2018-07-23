@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ESFA.DC.CollectionsManagement.Models;
 
 namespace ESFA.DC.CollectionsManagement.Services.Interface
@@ -7,8 +8,8 @@ namespace ESFA.DC.CollectionsManagement.Services.Interface
     {
         Organisation GetByUkprn(long ukprn);
 
-        IEnumerable<CollectionType> GetAvailableCollectionTypes(long ukprn);
+        Task<IEnumerable<CollectionType>> GetAvailableCollectionTypesAsync(long ukprn);
 
-        IEnumerable<Collection> GetAvailableCollections(long ukprn, string collectionType);
+        Task<IEnumerable<Collection>> GetAvailableCollectionsAsync(long ukprn, string collectionType);
     }
 }
