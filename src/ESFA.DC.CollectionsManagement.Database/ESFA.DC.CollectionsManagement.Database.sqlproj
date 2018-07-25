@@ -146,8 +146,7 @@
       <AnsiNulls>On</AnsiNulls>
       <QuotedIdentifier>On</QuotedIdentifier>
     </Build>
-    <Build Include="Security\RO_User.sql" />
-    <Build Include="Security\RW_User.sql" />
+    <Build Include="Security\CollectionsManagementUser.sql" />
     <Build Include="Security\RoleMemberships.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -166,13 +165,9 @@
       <DefaultValue>NotUsedLocally</DefaultValue>
       <Value>$(SqlCmdVar__5)</Value>
     </SqlCmdVariable>
-    <SqlCmdVariable Include="ROUserPassword">
+    <SqlCmdVariable Include="CollectionsManagementUserPassword">
       <DefaultValue>NotUsedLocally</DefaultValue>
       <Value>$(SqlCmdVar__1)</Value>
-    </SqlCmdVariable>
-    <SqlCmdVariable Include="RWUserPassword">
-      <DefaultValue>NotUsedLocally</DefaultValue>
-      <Value>$(SqlCmdVar__2)</Value>
     </SqlCmdVariable>
   </ItemGroup>
   <ItemGroup>

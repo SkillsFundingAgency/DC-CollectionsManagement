@@ -17,10 +17,7 @@
     <SqlCmdVariable Include="RELEASE_RELEASENAME">
       <Value>NotUsedLocally</Value>
     </SqlCmdVariable>
-    <SqlCmdVariable Include="ROUserPassword">
-      <Value>NotUsedLocally</Value>
-    </SqlCmdVariable>
-    <SqlCmdVariable Include="RWUserPassword">
+    <SqlCmdVariable Include="CollectionsManagementUserPassword">
       <Value>NotUsedLocally</Value>
     </SqlCmdVariable>
   </ItemGroup>

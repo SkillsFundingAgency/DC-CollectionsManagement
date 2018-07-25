@@ -1,7 +1,5 @@
 ﻿
 GO
-ALTER ROLE [db_datareader] ADD MEMBER [CollectionsManagement_RO_User];
+ALTER ROLE [db_datareader] ADD MEMBER [CollectionsManagementUser];
 GO
-ALTER ROLE [db_datawriter] ADD MEMBER [CollectionsManagement_RW_User];
-GO
-ALTER ROLE [db_datareader] ADD MEMBER [CollectionsManagement_RW_User];
+ALTER ROLE [db_datawriter] ADD MEMBER [CollectionsManagementUser];

@@ -62,9 +62,7 @@ GO
 
 RAISERROR('		   Update User Account Passwords',10,1) WITH NOWAIT;
 GO
-ALTER USER [CollectionsManagement_RO_User] WITH PASSWORD = N'$(ROUserPassword)';
-ALTER USER [CollectionsManagement_RW_User] WITH PASSWORD = N'$(RWUserPassword)';
-
+ALTER USER [CollectionsManagementUser] WITH PASSWORD = N'$(CollectionsManagementUserPassword)';
 GO
 RAISERROR('Completed',10,1) WITH NOWAIT;
 GO
