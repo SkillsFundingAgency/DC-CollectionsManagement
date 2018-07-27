@@ -10,7 +10,7 @@ namespace ESFA.DC.CollectionsManagement.Data.Entities
 
         public DateTime EndDateTimeUtc { get; set; }
 
-        public string PeriodName { get; set; }
+        public int PeriodNumber { get; set; }
 
         public int CollectionId { get; set; }
 

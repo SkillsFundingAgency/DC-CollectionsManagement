@@ -29,7 +29,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             var result = task.GetAwaiter().GetResult();
 
             result.Should().NotBeNull();
-            result.PeriodName.Should().Be("R01");
+            result.PeriodNumber.Should().Be(1);
             result.CalendarMonth.Should().Be(8);
             result.CalendarYear.Should().Be(2018);
             result.CollectionName.Should().Be("ILR1718");
@@ -50,7 +50,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             var result = task.GetAwaiter().GetResult();
 
             result.Should().NotBeNull();
-            result.PeriodName.Should().Be("R12");
+            result.PeriodNumber.Should().Be(12);
             result.CalendarMonth.Should().Be(7);
             result.CalendarYear.Should().Be(2018);
             result.CollectionName.Should().Be("ILR1718");
@@ -74,7 +74,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
                     CalendarMonth = 8,
                     CalendarYear = 2018,
                     ReturnPeriodId = 2,
-                    PeriodName = "R01",
+                    PeriodNumber = 1,
                     StartDateTimeUtc = new System.DateTime(2018, 08, 22),
                     EndDateTimeUtc = new System.DateTime(2018, 09, 04),
                     Collection = collection,
@@ -86,7 +86,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
                     CalendarMonth = 7,
                     CalendarYear = 2018,
                     ReturnPeriodId = 1,
-                    PeriodName = "R12",
+                    PeriodNumber = 12,
                     StartDateTimeUtc = System.DateTime.UtcNow.AddSeconds(-60),
                     EndDateTimeUtc = System.DateTime.UtcNow.AddSeconds(60),
                     Collection = collection,

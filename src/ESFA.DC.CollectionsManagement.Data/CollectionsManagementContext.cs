@@ -98,10 +98,8 @@ namespace ESFA.DC.CollectionsManagement.Data
                     .HasColumnName("EndDateTimeUTC")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.PeriodName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.PeriodNumber)
+                    .IsRequired();
 
                 entity.Property(e => e.StartDateTimeUtc)
                     .HasColumnName("StartDateTimeUTC")
