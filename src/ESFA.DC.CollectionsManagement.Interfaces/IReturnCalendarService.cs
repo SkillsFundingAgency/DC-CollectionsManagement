@@ -8,6 +8,6 @@ namespace ESFA.DC.CollectionsManagement.Services.Interface
     {
         Task<ReturnPeriod> GetCurrentPeriodAsync(string collectionName);
 
-        Task<ReturnPeriod> GetCurrentPeriodAsync(string collectionName, DateTime dateTimeUTC);
+        Task<ReturnPeriod> GetPeriodAsync(string collectionName, DateTime dateTimeUTC);
     }
 }
