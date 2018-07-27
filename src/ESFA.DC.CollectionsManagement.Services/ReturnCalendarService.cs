@@ -21,14 +21,13 @@ namespace ESFA.DC.CollectionsManagement.Services
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<ReturnPeriod> GetCurrentPeriodAsync(string collectionName)
+        public async Task<ReturnPeriod> GetPeriodAsync(string collectionName, System.DateTime dateTimeUtc)
         {
-            var currentDateTime = _dateTimeProvider.GetNowUtc();
             var data = await _collectionsManagementContext.ReturnPeriods.Include(x => x.Collection).Where(x =>
                     x.Collection.Name == collectionName &&
-                    currentDateTime >= x.StartDateTimeUtc
-                    && currentDateTime <= x.EndDateTimeUtc)
-                    .FirstOrDefaultAsync();
+                    dateTimeUtc >= x.StartDateTimeUtc
+                    && dateTimeUtc <= x.EndDateTimeUtc)
+                .FirstOrDefaultAsync();
             if (data != null)
             {
                 var period = new ReturnPeriod()
@@ -44,6 +43,12 @@ namespace ESFA.DC.CollectionsManagement.Services
             }
 
             return null;
+        }
+
+        public async Task<ReturnPeriod> GetCurrentPeriodAsync(string collectionName)
+        {
+            var currentDateTime = _dateTimeProvider.GetNowUtc();
+            return await GetPeriodAsync(collectionName, currentDateTime);
         }
 
         public void Dispose()
