@@ -32,7 +32,7 @@ namespace ESFA.DC.CollectionsManagement.Services
             {
                 var period = new ReturnPeriod()
                 {
-                    PeriodName = data.PeriodName,
+                    PeriodNumber = data.PeriodNumber,
                     EndDateTimeUtc = data.EndDateTimeUtc,
                     StartDateTimeUtc = data.StartDateTimeUtc,
                     CalendarMonth = data.CalendarMonth,
