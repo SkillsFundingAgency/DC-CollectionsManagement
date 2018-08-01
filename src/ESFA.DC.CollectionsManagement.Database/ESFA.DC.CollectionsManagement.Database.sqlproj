@@ -124,6 +124,8 @@
     <Folder Include="dbo\Tables\" />
     <Folder Include="Security" />
     <Folder Include="zzDeploymentProfiles\" />
+    <Folder Include="ReferenceData" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Collection.sql">
@@ -148,6 +150,10 @@
     </Build>
     <Build Include="Security\CollectionsManagementUser.sql" />
     <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="ReferenceData\Collections.sql" />
+    <Build Include="ReferenceData\ReturnPeriod.sql" />
+    <Build Include="ReferenceData\CollectionType.sql" />
+    <Build Include="dbo\Views\vw_CurrentCollectionReturnPeriods.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="zzz.Script.PostDeployment.sql" />

@@ -15,6 +15,15 @@ Post-Deployment Script Template
 SET NOCOUNT ON;
 GO
 
+
+
+RAISERROR('		   Static/Ref Data',10,1) WITH NOWAIT;
+	:r .\ReferenceData\CollectionType.sql
+	:r .\ReferenceData\Collections.sql
+	:r .\ReferenceData\ReturnPeriod.sql
+RAISERROR('		   Static/Ref Data - Done',10,1) WITH NOWAIT;
+GO
+
 RAISERROR('		   Extended Property',10,1) WITH NOWAIT;
 GO
 
