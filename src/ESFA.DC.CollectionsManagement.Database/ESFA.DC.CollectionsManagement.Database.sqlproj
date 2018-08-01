@@ -179,4 +179,7 @@
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="ESFA.DC.CollectionsManagement.Database.refactorlog" />
+  </ItemGroup>
 </Project>

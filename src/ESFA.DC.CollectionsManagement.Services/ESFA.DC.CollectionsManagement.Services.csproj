@@ -16,10 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ESFA.DC.CollectionsManagement.Models" Version="0.1.4-beta0001" />
-    <PackageReference Include="ESFA.DC.CollectionsManagement.Services.Interface" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.CollectionsManagement.Models" Version="0.1.5-beta0001" />
+    <PackageReference Include="ESFA.DC.CollectionsManagement.Services.Interface" Version="0.1.9-beta0001" />
     <PackageReference Include="ESFA.DC.DateTime.Provider.Interface" Version="0.1.4-beta0001" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" >
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
