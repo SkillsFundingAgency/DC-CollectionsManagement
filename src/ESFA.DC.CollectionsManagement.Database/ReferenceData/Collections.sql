@@ -1,38 +1,45 @@
 ﻿
+BEGIN
 
-DECLARE @SummaryOfChanges_Collection TABLE ([EventId] INT, [Action] VARCHAR(100));
+	DECLARE @SummaryOfChanges_Collection TABLE ([CollectionId] INT, [Action] VARCHAR(100));
 
-MERGE INTO [dbo].[JobStatusType] AS Target
-USING (VALUES
-	(1, N'ILR1718', 1, 1),
-	(2, N'EAS', 1, 2),
-	(3, N'ESF', 1, 3)
-	  )
-	AS Source([CollectionId], [Name], [IsOpen], [CollectionTypeId])
-	ON Target.[CollectionId] = Source.[CollectionId]
-	WHEN MATCHED 
-			AND EXISTS 
-				(		SELECT Target.[Name]
-							  ,Target.[IsOpen]
-							  ,Target.[CollectionTypeId]
-					EXCEPT 
-						SELECT Source.[Name]
-						      ,Source.[IsOpen]
-						      ,Source.[CollectionTypeId]
-				)
-		  THEN UPDATE SET Target.[Name] = Source.[Name],
-			              Target.[IsOpen] = Source.[IsOpen],
-			              Target.[CollectionTypeId] = Source.[CollectionTypeId]
-	WHEN NOT MATCHED BY TARGET THEN INSERT([CollectionId], [IsOpen], [Name], [CollectionTypeId]) 
-								   VALUES ([CollectionId], [IsOpen], [Name], [CollectionTypeId])
-	WHEN NOT MATCHED BY SOURCE THEN DELETE
-	OUTPUT Inserted.[CollectionId],$action INTO @SummaryOfChanges_Collection([EventId],[Action])
-;
+	MERGE INTO [dbo].[Collection] AS Target
+	USING (
+			SELECT NewRecords.[CollectionId], NewRecords.[Name], NewRecords.[IsOpen], CT.[CollectionTypeId]
+			FROM 
+			(
+				  SELECT 1 AS [CollectionId], N'ILR1819' as [Name], 1 as [IsOpen], N'ILR Submission' as [CollectionType]
+			UNION SELECT 2 AS [CollectionId], N'EAS' as [Name],     1 as [IsOpen], N'EAS Submission' as [CollectionType]
+			UNION SELECT 3 AS [CollectionId], N'ESF' as [Name],     1 as [IsOpen], N'ESF Supp Data Submission' as [CollectionType]
+			) AS NewRecords
+			INNER JOIN [dbo].[CollectionType] CT
+				ON CT.[Description] = NewRecords.[CollectionType]
+		  )
+		AS Source([CollectionId], [Name], [IsOpen], [CollectionTypeId])
+		ON Target.[CollectionId] = Source.[CollectionId]
+		WHEN MATCHED 
+				AND EXISTS 
+					(		SELECT Target.[Name]
+								  ,Target.[IsOpen]
+								  ,Target.[CollectionTypeId]
+						EXCEPT 
+							SELECT Source.[Name]
+								  ,Source.[IsOpen]
+								  ,Source.[CollectionTypeId]
+					)
+			  THEN UPDATE SET Target.[Name] = Source.[Name],
+							  Target.[IsOpen] = Source.[IsOpen],
+							  Target.[CollectionTypeId] = Source.[CollectionTypeId]
+		WHEN NOT MATCHED BY TARGET THEN INSERT([CollectionId], [IsOpen], [Name], [CollectionTypeId]) 
+									   VALUES ([CollectionId], [IsOpen], [Name], [CollectionTypeId])
+		WHEN NOT MATCHED BY SOURCE THEN DELETE
+		OUTPUT Inserted.[CollectionId],$action INTO @SummaryOfChanges_Collection([CollectionId],[Action])
+	;
 
-	DECLARE @AddCount_JST INT, @UpdateCount_JST INT, @DeleteCount_JST INT
-	SET @AddCount_JST  = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_Collection WHERE [Action] = 'Insert' GROUP BY Action),0);
-	SET @UpdateCount_JST = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_Collection WHERE [Action] = 'Update' GROUP BY Action),0);
-	SET @DeleteCount_JST = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_Collection WHERE [Action] = 'Delete' GROUP BY Action),0);
+		DECLARE @AddCount_C INT, @UpdateCount_C INT, @DeleteCount_C INT
+		SET @AddCount_C  = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_Collection WHERE [Action] = 'Insert' GROUP BY Action),0);
+		SET @UpdateCount_C = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_Collection WHERE [Action] = 'Update' GROUP BY Action),0);
+		SET @DeleteCount_C = ISNULL((SELECT Count(*) FROM @SummaryOfChanges_Collection WHERE [Action] = 'Delete' GROUP BY Action),0);
 
-	RAISERROR('		      %s - Added %i - Update %i - Delete %i',10,1,'JobStatusType', @AddCount_JST, @UpdateCount_JST, @DeleteCount_JST) WITH NOWAIT;
-
+		RAISERROR('		      %s - Added %i - Update %i - Delete %i',10,1,'JobStatusType', @AddCount_C, @UpdateCount_C, @DeleteCount_C) WITH NOWAIT;
+END

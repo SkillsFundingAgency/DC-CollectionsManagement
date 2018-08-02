@@ -150,9 +150,9 @@
     </Build>
     <Build Include="Security\CollectionsManagementUser.sql" />
     <Build Include="Security\RoleMemberships.sql" />
-    <Build Include="ReferenceData\Collections.sql" />
-    <Build Include="ReferenceData\ReturnPeriod.sql" />
-    <Build Include="ReferenceData\CollectionType.sql" />
+    <None Include="ReferenceData\Collections.sql" />
+    <None Include="ReferenceData\ReturnPeriod.sql" />
+    <None Include="ReferenceData\CollectionType.sql" />
     <Build Include="dbo\Views\vw_CurrentCollectionReturnPeriods.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />
+    <None Include="__Add.UKPRN.to.Collection.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ESFA.DC.CollectionsManagement.Database.refactorlog" />
