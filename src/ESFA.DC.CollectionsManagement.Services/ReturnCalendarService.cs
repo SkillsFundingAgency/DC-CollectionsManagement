@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ESFA.DC.CollectionsManagement.Data;
 using ESFA.DC.CollectionsManagement.Models;
 using ESFA.DC.CollectionsManagement.Services.Interface;
-using ESFA.DC.DateTime.Provider.Interface;
+using ESFA.DC.DateTimeProvider.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace ESFA.DC.CollectionsManagement.Services
@@ -21,7 +20,7 @@ namespace ESFA.DC.CollectionsManagement.Services
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task<ReturnPeriod> GetPeriodAsync(string collectionName, System.DateTime dateTimeUtc)
+        public async Task<ReturnPeriod> GetPeriodAsync(string collectionName, DateTime dateTimeUtc)
         {
             var data = await _collectionsManagementContext.ReturnPeriods.Include(x => x.Collection).Where(x =>
                     x.Collection.Name == collectionName &&
