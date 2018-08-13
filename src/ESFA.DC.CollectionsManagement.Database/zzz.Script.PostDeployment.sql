@@ -15,8 +15,6 @@ Post-Deployment Script Template
 SET NOCOUNT ON;
 GO
 
-
-
 RAISERROR('		   Static/Ref Data',10,1) WITH NOWAIT;
 	:r .\ReferenceData\CollectionType.sql
 	:r .\ReferenceData\Collections.sql
