@@ -89,6 +89,22 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             result[0].CollectionTitle.Should().Be("test coll");
         }
 
+        [Fact]
+        public void Test_GetCollection_Success()
+        {
+            var dbContextOptions = GetContextOptions();
+            var service = new OrganisationService(dbContextOptions);
+
+            SetupData(dbContextOptions);
+
+            var result = service.GetCollectionAsync(1000, "test coll").Result;
+
+            result.Should().NotBeNull();
+            result.CollectionType.Should().Be("ILR");
+            result.IsOpen.Should().Be(true);
+            result.CollectionTitle.Should().Be("test coll");
+        }
+
         private void SetupData(DbContextOptions dbContextOptions)
         {
             using (var cmContext = new CollectionsManagementContext(dbContextOptions))
