@@ -53,6 +53,27 @@ namespace ESFA.DC.CollectionsManagement.Services
             return items;
         }
 
+        public async Task<Collection> GetCollectionAsync(long ukprn, string collectionName)
+        {
+            var data = await _collectionsManagementContext.OrganisationCollections
+                .Include(x => x.Collection)
+                .ThenInclude(x => x.CollectionType)
+                .Where(x => x.Organisation.Ukprn == ukprn &&
+                            x.Collection.Name.Equals(collectionName, StringComparison.CurrentCultureIgnoreCase))
+                .FirstOrDefaultAsync();
+            if (data != null)
+            {
+                return new Collection()
+                {
+                    CollectionTitle = data.Collection.Name,
+                    IsOpen = data.Collection.IsOpen,
+                    CollectionType = data.Collection.CollectionType.Type
+                };
+            }
+
+            return null;
+        }
+
         public Organisation GetByUkprn(long ukprn)
         {
             throw new NotImplementedException();
