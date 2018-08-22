@@ -11,5 +11,7 @@ namespace ESFA.DC.CollectionsManagement.Services.Interface
         Task<IEnumerable<CollectionType>> GetAvailableCollectionTypesAsync(long ukprn);
 
         Task<IEnumerable<Collection>> GetAvailableCollectionsAsync(long ukprn, string collectionType);
+
+        Task<Collection> GetCollectionAsync(long ukprn, string collectionName);
     }
 }
