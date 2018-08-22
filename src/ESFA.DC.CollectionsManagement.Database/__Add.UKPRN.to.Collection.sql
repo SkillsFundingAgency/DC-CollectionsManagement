@@ -1,51 +1,39 @@
 ﻿
 
-DECLARE @CollectionName VARCHAR(250) ='<CollectioName, VARCAHR(250),ILR1819>'   -- SELECT [Name] FROM [dbo].[Collection]
-
-DECLARE @UKPRN BIGINT = <UKPR, VARCAHR(250),999999999>
-DECLARE @OrgName VARCHAR(250) ='<OrgName, VARCAHR(250),Test OrgName>'
-DECLARE @OrgEmail VARCHAR(250) ='<OrgEmail, VARCAHR(250),a.a@a.a>'
 
 SET NOCOUNT ON;
+DECLARE @CollectionName VARCHAR(250) ='ILR1819'  -- SELECT [Name] FROM [dbo].[Collection]
 
-IF NOT EXISTS (SELECT * FROM [dbo].[Organisation]  WHERE [Ukprn] = @UKPRN)
-BEGIN
-	DECLARE @OrgId INT = (SELECT ISNULL(MAX([OrganisationId]),0)+1 FROM [dbo].[Organisation])
+DECLARE @Providers TABLE (UKPRN BIGINT PRIMARY KEY ,OrgName VARCHAR(250),OrgEmail VARCHAR(250))
 
-	INSERT [dbo].[Organisation] ([OrganisationId], [OrgId], [Ukprn], [Name], [Email])
-	VALUES (@OrgId, 'SomeCrap', @UKPRN, @OrgName, @OrgEmail);
-	RAISERROR('Added UKPRN : %I64d | Org : %s',10,1,@UKPRN,@OrgName ) WITH NOWAIT;
-END
+INSERT INTO @Providers( [UKPRN],[OrgName],[OrgEmail])
+SELECT DISTINCT [UKPRN],[OrgName],[OrgEmail]
+FROM
+(
+-------------------------------------------------------- PUT DATA - START-------------------------------------------------------- 
+	  SELECT 1 AS UKPRN, '' AS OrgName, '' as OrgEmail
+UNION SELECT 2 AS UKPRN, '' AS OrgName, '' as OrgEmail
+-------------------------------------------------------- PUT DATA - END  -------------------------------------------------------- 
+) as NewRecords
 
+DECLARE @UKPRN BIGINT ,@OrgName VARCHAR(250),@OrgEmail VARCHAR(250)
 
-IF NOT EXISTS (
-				SELECT 
-					   O.[Ukprn] as UKPRN
-					  ,C.[CollectionId] as CollectionId
-					  ,C.[Name] as CollectionName
-					  ,C.[IsOpen] as IsOpen
-				FROM [dbo].[Organisation] O
-				INNER JOIN [dbo].[OrganisationCollection] OC
-					ON OC.[OrganisationId] = O.[OrganisationId]
-				INNER JOIN [dbo].[Collection] C
-					ON C.[CollectionId] = OC.[CollectionId]
-				WHERE O.[Ukprn] = @UKPRN
-				  AND C.[Name] = @CollectionName
-)
-BEGIN
-	DECLARE @OrganisationId INT = (SELECT [OrganisationId] FROM [dbo].[Organisation] WHERE [Ukprn] = @UKPRN)
-	DECLARE @CollectionId INT = (SELECT [CollectionId] FROM [dbo].[Collection] WHERE [Name] = @CollectionName)
+DECLARE Providers_Cursor CURSOR READ_ONLY FOR SELECT * FROM @Providers 
 
-	IF ((@OrganisationId IS NULL )OR(@CollectionId IS NULL)) 
-	  BEGIN
-		RAISERROR('Error Getting Org or Collection IDs',17,1) WITH NOWAIT;
-	  END
-	ELSE
-	  BEGIN
-	    INSERT [dbo].[OrganisationCollection] ([OrganisationId], [CollectionId]) 
-	    SELECT @OrganisationId, @CollectionId
-		RAISERROR('Added Collection : %s to UKPRN : %I64d - %s',10,1,@CollectionName,@UKPRN,@OrgName ) WITH NOWAIT;
-	  END
-END
+OPEN Providers_Cursor;  
+FETCH NEXT FROM Providers_Cursor INTO @UKPRN,@OrgName,@OrgEmail;  
+WHILE @@FETCH_STATUS = 0  
+   BEGIN  
+	SELECT  @UKPRN as UKPRN ,@OrgName as OrgName,@OrgEmail as OrgEmail
 
-SELECT * FROM [dbo].[vw_CurrentCollectionReturnPeriods] WHERE UKPRN = @UKPRN
+	--EXEC [dbo].[usp_Add_UKPRN_to_Collection]
+	--		@CollectionName = @CollectionName
+	--	   ,@UKPRN = @UKPRN
+	--	   ,@OrgName = @OrgName
+	--	   ,@OrgEmail = @OrgEmail
+
+      FETCH NEXT FROM Providers_Cursor INTO @UKPRN,@OrgName,@OrgEmail;  
+   END;  
+CLOSE Providers_Cursor;  
+DEALLOCATE Providers_Cursor;  
+GO  
