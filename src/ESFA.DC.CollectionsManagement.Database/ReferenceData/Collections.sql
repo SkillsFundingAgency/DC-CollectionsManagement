@@ -8,12 +8,12 @@ BEGIN
 			SELECT NewRecords.[CollectionId], NewRecords.[Name], NewRecords.[IsOpen], CT.[CollectionTypeId]
 			FROM 
 			(
-				  SELECT 1 AS [CollectionId], N'ILR1819' as [Name], 1 as [IsOpen], N'ILR Submission' as [CollectionType]
-			UNION SELECT 2 AS [CollectionId], N'EAS' as [Name],     1 as [IsOpen], N'EAS Submission' as [CollectionType]
-			UNION SELECT 3 AS [CollectionId], N'ESF' as [Name],     1 as [IsOpen], N'ESF Supp Data Submission' as [CollectionType]
+				  SELECT 1 AS [CollectionId], N'ILR1819' as [Name], 1 as [IsOpen], N'ILR' as [CollectionType]
+			UNION SELECT 2 AS [CollectionId], N'EAS' as [Name],     1 as [IsOpen], N'EAS' as [CollectionType]
+			UNION SELECT 3 AS [CollectionId], N'ESF' as [Name],     1 as [IsOpen], N'ESF' as [CollectionType]
 			) AS NewRecords
 			INNER JOIN [dbo].[CollectionType] CT
-				ON CT.[Description] = NewRecords.[CollectionType]
+				ON CT.[TYPE] = NewRecords.[CollectionType]
 		  )
 		AS Source([CollectionId], [Name], [IsOpen], [CollectionTypeId])
 		ON Target.[CollectionId] = Source.[CollectionId]
