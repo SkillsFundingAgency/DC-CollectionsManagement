@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseName>CollectionsManagement</TargetDatabaseName>
+    <DeployScriptFileName>ESFA.DC.CollectionsManagement.Database.sql</DeployScriptFileName>
+    <TargetConnectionString>Data Source=(local);Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
+    <ProfileVersionNumber>1</ProfileVersionNumber>
+  </PropertyGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="BUILD_BRANCHNAME">
+      <Value>NotUsedLocally</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="BUILD_BUILDNUMBER">
+      <Value>NotUsedLocally</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="RELEASE_RELEASENAME">
+      <Value>NotUsedLocally</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="CollectionsManagementUserPassword">
+      <Value>NotUsedLocally</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
+</Project>
