@@ -2,6 +2,7 @@
 AS 
 	SELECT 
 	   O.[Ukprn] as UKPRN
+	  ,O.[Name] as OrgName
 	  ,C.[CollectionId] as CollectionId
 	  ,C.[Name] as CollectionName
 	  ,C.[IsOpen] as IsOpen
