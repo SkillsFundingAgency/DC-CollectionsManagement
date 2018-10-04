@@ -29,16 +29,7 @@ namespace ESFA.DC.CollectionsManagement.Services
                 .FirstOrDefaultAsync();
             if (data != null)
             {
-                var period = new ReturnPeriod()
-                {
-                    PeriodNumber = data.PeriodNumber,
-                    EndDateTimeUtc = data.EndDateTimeUtc,
-                    StartDateTimeUtc = data.StartDateTimeUtc,
-                    CalendarMonth = data.CalendarMonth,
-                    CalendarYear = data.CalendarYear,
-                    CollectionName = data.Collection.Name
-                };
-                return period;
+                return Convert(data);
             }
 
             return null;
@@ -48,6 +39,30 @@ namespace ESFA.DC.CollectionsManagement.Services
         {
             var currentDateTime = _dateTimeProvider.GetNowUtc();
             return await GetPeriodAsync(collectionName, currentDateTime);
+        }
+
+        public async Task<ReturnPeriod> GetNextPeriodAsync(string collectionName)
+        {
+            var currentDateTime = _dateTimeProvider.GetNowUtc();
+            var data = await _collectionsManagementContext.ReturnPeriods.Include(x => x.Collection).Where(x =>
+                    x.Collection.Name == collectionName &&
+                    x.StartDateTimeUtc > currentDateTime).OrderBy(x => x.StartDateTimeUtc)
+                .FirstOrDefaultAsync();
+            return Convert(data);
+        }
+
+        public ReturnPeriod Convert(Data.Entities.ReturnPeriod data)
+        {
+            var period = new ReturnPeriod()
+            {
+                PeriodNumber = data.PeriodNumber,
+                EndDateTimeUtc = data.EndDateTimeUtc,
+                StartDateTimeUtc = data.StartDateTimeUtc,
+                CalendarMonth = data.CalendarMonth,
+                CalendarYear = data.CalendarYear,
+                CollectionName = data.Collection.Name
+            };
+            return period;
         }
 
         public void Dispose()

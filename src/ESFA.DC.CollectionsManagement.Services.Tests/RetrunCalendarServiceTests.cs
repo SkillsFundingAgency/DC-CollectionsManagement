@@ -51,6 +51,27 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
             result.CollectionName.Should().Be("ILR1718");
         }
 
+        [Fact]
+        public void Test_GetNextPeriod_Success()
+        {
+            var dbContextOptions = GetContextOptions();
+            var dateTimeprovider = new Mock<IDateTimeProvider>();
+            dateTimeprovider.Setup(x => x.GetNowUtc()).Returns(System.DateTime.UtcNow);
+
+            var service = new ReturnCalendarService(dbContextOptions, dateTimeprovider.Object);
+
+            SetupData(dbContextOptions);
+
+            var task = service.GetNextPeriodAsync("ILR1718");
+            var result = task.GetAwaiter().GetResult();
+
+            result.Should().NotBeNull();
+            result.PeriodNumber.Should().Be(3);
+            result.CalendarMonth.Should().Be(9);
+            result.CalendarYear.Should().Be(2018);
+            result.CollectionName.Should().Be("ILR1718");
+        }
+
         private void SetupData(DbContextOptions dbContextOptions)
         {
             using (var cmContext = new CollectionsManagementContext(dbContextOptions))
@@ -84,6 +105,18 @@ namespace ESFA.DC.CollectionsManagement.Services.Tests
                     PeriodNumber = 12,
                     StartDateTimeUtc = System.DateTime.UtcNow.AddSeconds(-60),
                     EndDateTimeUtc = System.DateTime.UtcNow.AddSeconds(60),
+                    Collection = collection,
+                    CollectionId = 1
+                });
+
+                cmContext.ReturnPeriods.Add(new Data.Entities.ReturnPeriod()
+                {
+                    CalendarMonth = 9,
+                    CalendarYear = 2018,
+                    ReturnPeriodId = 3,
+                    PeriodNumber = 3,
+                    StartDateTimeUtc = System.DateTime.UtcNow.AddDays(1),
+                    EndDateTimeUtc = System.DateTime.UtcNow.AddDays(10),
                     Collection = collection,
                     CollectionId = 1
                 });
