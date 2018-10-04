@@ -53,6 +53,11 @@ namespace ESFA.DC.CollectionsManagement.Services
 
         public ReturnPeriod Convert(Data.Entities.ReturnPeriod data)
         {
+            if (data == null)
+            {
+                return null;
+            }
+
             var period = new ReturnPeriod()
             {
                 PeriodNumber = data.PeriodNumber,
