@@ -15,6 +15,8 @@ AS
 		RETURN;
 	END
 
+	SET @OrgName = LTRIM(RTRIM(@OrgName));
+	SET @OrgEmail = LTRIM(RTRIM(@OrgEmail));
 
 	IF NOT EXISTS (SELECT * FROM [dbo].[Organisation] WHERE [Ukprn] = @UKPRN)
 	BEGIN
@@ -39,7 +41,7 @@ AS
 					WHERE O.[Ukprn] = @UKPRN
 					  AND C.[Name] = @CollectionName
 	)
-	BEGIN
+	 BEGIN
 		DECLARE @OrganisationId INT = (SELECT [OrganisationId] FROM [dbo].[Organisation] WHERE [Ukprn] = @UKPRN);
 		DECLARE @CollectionId INT = (SELECT [CollectionId] FROM [dbo].[Collection] WHERE [Name] = @CollectionName);
 
@@ -59,10 +61,10 @@ AS
 			SELECT @OrganisationId, @CollectionId
 			RAISERROR('Added Collection : %s to UKPRN : %I64d - %s',10,1,@CollectionName,@UKPRN,@OrgName ) WITH NOWAIT;
 		  END
-	END
+	 END
 	ELSE
-	BEGIN
+	 BEGIN
 		RAISERROR('UKPRN : %I64d  - Already has access to Collection : %s',10,1,@UKPRN,@CollectionName) WITH NOWAIT;
-	END	
+	 END	
 END	 
 GO
